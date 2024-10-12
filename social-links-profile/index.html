@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Frontend Mentor | Social links profile</title>
+    <style>
+      @font-face {
+        font-family: 'Inter';
+        font-weight: 100 900;
+        font-display: swap;
+        src: url(Inter-VariableFont.ttf);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background-color: hsl(0, 0%, 8%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 24px;
+        font-family: 'Inter', sans-serif;
+        letter-spacing: 0.2px;
+      }
+
+      div {
+        background-color: hsl(0, 0%, 12%);
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 384px;
+        border-radius: 12px;
+        gap: 16px;
+      }
+
+      @media (max-width: 500px) {
+        div {
+          padding: 24px;
+        }
+      }
+
+      img {
+        width: 88px;
+        margin-bottom: 12px;
+        border-radius: 50%;
+      }
+
+      h2 {
+        color: white;
+        font-weight: 450;
+        margin: 0;
+        font-size: 24px;
+        margin-bottom: -6px;
+      }
+
+      h3 {
+        color: hsl(75, 94%, 57%);
+        font-weight: 500;
+        font-size: 14px;
+        margin: 0;
+      }
+
+      p {
+        font-size: 14px;
+        color: white;
+        margin: 0;
+        font-weight: 200;
+        margin-top: 12px;
+        margin-bottom: 10px;
+      }
+
+      a {
+        padding: 14px;
+        font-size: 14px;
+        width: 100%;
+        background-color: hsl(0, 0%, 20%);
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        text-align: center;
+        transition: background-color 0.25s, color 0.25s;
+        border-radius: 8px;
+      }
+
+      a:hover {
+        background-color: hsl(75, 94%, 57%);
+        color: hsl(0, 0%, 8%);
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <img src="avatar-jessica.jpeg" />
+      <h2>Jessica Randall</h2>
+      <h3>London, United Kingdom</h3>
+      <p>"Front-end developer and avid reader."</p>
+
+      <a href="#">GitHub</a>
+      <a href="#">Frontend Mentor</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">Twitter</a>
+      <a href="#">Instagram</a>
+    </div>
+  </body>
+</html>

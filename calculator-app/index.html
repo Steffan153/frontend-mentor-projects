@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Frontend Mentor | Calculator app</title>
+    <style>
+      @font-face {
+        font-family: 'League Spartan';
+        font-display: swap;
+        font-weight: 100 900;
+        src: url(LeagueSpartan-VariableFont_wght.ttf) format(truetype)
+          tech(variations);
+      }
+
+      .theme-1 {
+        --main: hsl(222, 26%, 31%);
+        --text: hsl(0, 0%, 100%);
+        --keypad: hsl(223, 31%, 20%);
+        --screen: hsl(224, 36%, 15%);
+
+        --key1-bg: hsl(30, 25%, 89%);
+        --key1-hover: hsl(0, 0%, 100%);
+        --key1-shadow: hsl(28, 16%, 65%);
+        --key1-text: hsl(221, 14%, 31%);
+
+        --key2-bg: hsl(6, 63%, 50%);
+        --key2-hover: hsl(6, 93%, 67%);
+        --key2-shadow: hsl(6, 70%, 34%);
+        --key2-text: hsl(0, 0%, 100%);
+
+        --key3-bg: hsl(225, 21%, 49%);
+        --key3-hover: hsl(224, 53%, 76%);
+        --key3-shadow: hsl(224, 28%, 35%);
+        --key3-text: hsl(0, 0%, 100%);
+      }
+
+      .theme-2 {
+        --main: hsl(0, 0%, 90%);
+        --text: hsl(60, 10%, 19%);
+        --keypad: hsl(0, 5%, 81%);
+        --screen: hsl(0, 0%, 93%);
+
+        --key1-bg: hsl(45, 7%, 89%);
+        --key1-hover: hsl(0, 0%, 100%);
+        --key1-shadow: hsl(35, 11%, 61%);
+        --key1-text: hsl(60, 10%, 19%);
+
+        --key2-bg: hsl(25, 98%, 40%);
+        --key2-hover: hsl(25, 100%, 61%);
+        --key2-shadow: hsl(25, 99%, 27%);
+        --key2-text: hsl(0, 0%, 100%);
+
+        --key3-bg: hsl(185, 42%, 37%);
+        --key3-hover: hsl(187, 42%, 57%);
+        --key3-shadow: hsl(185, 58%, 25%);
+        --key3-text: hsl(0, 0%, 100%);
+      }
+
+      .theme-3 {
+        --main: hsl(268, 75%, 9%);
+        --text: hsl(52, 100%, 62%);
+        --keypad: hsl(268, 71%, 12%);
+        --screen: hsl(268, 71%, 12%);
+
+        --key1-bg: hsl(268, 47%, 21%);
+        --key1-hover: hsl(268, 54%, 44%);
+        --key1-shadow: hsl(290, 70%, 36%);
+        --key1-text: hsl(52, 100%, 62%);
+
+        --key2-bg: hsl(176, 100%, 44%);
+        --key2-hover: hsl(177, 100%, 79%);
+        --key2-shadow: hsl(177, 92%, 70%);
+        --key2-text: hsl(198, 20%, 13%);
+
+        --key3-bg: hsl(281, 89%, 26%);
+        --key3-hover: hsl(280, 56%, 44%);
+        --key3-shadow: hsl(285, 91%, 52%);
+        --key3-text: hsl(0, 0%, 100%);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: 'League Spartan';
+        background-color: var(--main);
+        transition: background-color 0.25s;
+        display: flex;
+        min-height: 100vh;
+        padding: 0 24px;
+        justify-content: center;
+        align-items: center;
+        font-weight: 600;
+      }
+
+      body > div {
+        width: 100%;
+        max-width: 540px;
+      }
+
+      .keypad {
+        background-color: var(--keypad);
+        transition: background-color 0.25s;
+        padding: 32px 30px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+        border-radius: 10px;
+      }
+
+      .keypad div {
+        height: 60px;
+        padding-top: 6px;
+        font-size: 2.5rem;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 4px;
+        user-select: none;
+        cursor: pointer;
+        box-shadow: 0 4px var(--shadow);
+        transition: color 0.25s, background-color 0.25s;
+      }
+
+      .keypad div:active {
+        box-shadow: 0 2px var(--shadow);
+        margin-bottom: 2px;
+        margin-top: 2px;
+      }
+
+      .keytype-1 {
+        background-color: var(--key1-bg);
+        color: var(--key1-text);
+        --shadow: var(--key1-shadow);
+      }
+
+      .keytype-1:hover {
+        background-color: var(--key1-hover);
+      }
+
+      .keytype-2 {
+        background-color: var(--key2-bg);
+        color: var(--key2-text);
+        --shadow: var(--key2-shadow);
+      }
+
+      .keytype-2:hover {
+        background-color: var(--key2-hover);
+      }
+
+      .keytype-3 {
+        background-color: var(--key3-bg);
+        color: var(--key3-text);
+        --shadow: var(--key3-shadow);
+      }
+
+      .keytype-3:hover {
+        background-color: var(--key3-hover);
+      }
+
+      .keypad > :nth-last-child(-n + 2) {
+        grid-column: span 2;
+      }
+      .screen {
+        padding: 40px 32px;
+        padding-bottom: 38px;
+        text-align: right;
+        border-radius: 10px;
+        font-size: 54px;
+        background-color: var(--screen);
+        white-space: nowrap;
+        overflow: hidden;
+        margin-bottom: 24px;
+        color: var(--text);
+        transition: background-color 0.25s, color 0.25s;
+        letter-spacing: 0.5px;
+      }
+
+      .header {
+        display: flex;
+        color: var(--text);
+        transition: color 0.25s;
+        align-items: flex-end;
+        margin-bottom: 32px;
+        padding-left: 8px;
+      }
+
+      .header h2 {
+        margin: 0;
+        font-size: 2rem;
+        font-weight: 550;
+        margin-right: auto;
+      }
+
+      .toggle {
+        border-radius: 12px;
+        background-color: var(--keypad);
+        transition: background-color 0.25s;
+        padding: 5px;
+        width: 72px;
+        cursor: pointer;
+      }
+
+      .themes {
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        margin: 0 10px;
+        margin-bottom: 5px;
+      }
+
+      .circle {
+        background-color: var(--key2-bg);
+        transition: background-color 0.25s;
+        width: 16px;
+        height: 16px;
+        margin-left: 0;
+        transition: margin-left 0.25s;
+        border-radius: 50%;
+      }
+
+      .toggle:hover .circle {
+        background-color: var(--key2-hover);
+      }
+
+      .theme {
+        font-size: 0.75rem;
+        letter-spacing: 1.25px;
+        font-weight: 500;
+        margin-right: 28px;
+        margin-bottom: 6px;
+      }
+
+      div.key-del,
+      div.key-reset,
+      div.key-equals {
+        font-size: 1.75rem;
+      }
+
+      @media (max-width: 500px) {
+        .keypad {
+          gap: 12px;
+          padding: 24px;
+        }
+
+        .keypad div {
+          font-size: 2rem;
+          border-radius: 6px;
+        }
+
+        div.key-del,
+        div.key-reset,
+        div.key-equals {
+          font-size: 1.25rem;
+        }
+
+        .screen {
+          padding: 28px 24px;
+          padding-bottom: 26px;
+          font-size: 38px;
+        }
+
+        .themes {
+          font-size: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body class="theme-1">
+    <div>
+      <div class="header">
+        <h2>calc</h2>
+        <div class="theme">THEME</div>
+        <div>
+          <div class="themes">
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+          </div>
+          <div class="toggle">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+      <div class="screen">0</div>
+      <div class="keypad">
+        <div class="keytype-1 key-7">7</div>
+        <div class="keytype-1 key-8">8</div>
+        <div class="keytype-1 key-9">9</div>
+        <div class="keytype-3 key-del">DEL</div>
+        <div class="keytype-1 key-4">4</div>
+        <div class="keytype-1 key-5">5</div>
+        <div class="keytype-1 key-6">6</div>
+        <div class="keytype-1 key-plus">+</div>
+        <div class="keytype-1 key-1">1</div>
+        <div class="keytype-1 key-2">2</div>
+        <div class="keytype-1 key-3">3</div>
+        <div class="keytype-1 key-minus">-</div>
+        <div class="keytype-1 key-point">.</div>
+        <div class="keytype-1 key-0">0</div>
+        <div class="keytype-1 key-divide">/</div>
+        <div class="keytype-1 key-times">x</div>
+        <div class="keytype-3 key-reset">RESET</div>
+        <div class="keytype-2 key-equals">=</div>
+      </div>
+    </div>
+    <script>
+      let theme = 1;
+      function setTheme(x) {
+        document.body.classList.remove('theme-' + theme);
+        localStorage.theme = theme = x;
+        document.body.classList.add('theme-' + theme);
+        document.querySelector('.circle').style.marginLeft =
+          23 * (theme - 1) + 'px';
+      }
+      function updateScreen() {
+        document.querySelector('.screen').innerText = val;
+        document.querySelector('.screen').scrollTo(9999, 0);
+      }
+      document.querySelector('.toggle').addEventListener('click', () => {
+        setTheme((theme % 3) + 1);
+      });
+      setTheme(+localStorage.theme || 1);
+
+      let isRes = false;
+      let val = '0';
+
+      for (let i = 0; i <= 9; i++) {
+        let n = i;
+        document.querySelector('.key-' + i).addEventListener('click', () => {
+          if (isRes || val === '0') val = '';
+          val += n;
+          updateScreen();
+          isRes = false;
+        });
+      }
+
+      document.querySelector('.key-reset').addEventListener('click', () => {
+        val = '0';
+        updateScreen();
+      });
+
+      document.querySelector('.key-del').addEventListener('click', () => {
+        val = val.slice(0, -1) || '0';
+        updateScreen();
+        isRes = false;
+      });
+
+      document.querySelector('.key-point').addEventListener('click', () => {
+        if (/\.\d*$/.test(val)) return;
+        val += '.';
+        updateScreen();
+        isRes = false;
+      });
+
+      for (const [op, name] of [
+        ['+', 'plus'],
+        ['-', 'minus'],
+        ['*', 'times'],
+        ['/', 'divide'],
+      ]) {
+        document.querySelector('.key-' + name).addEventListener('click', () => {
+          if (op !== '-' && /[+*/-]$/.test(val)) return;
+          val += op;
+          updateScreen();
+          isRes = false;
+        });
+      }
+
+      document.querySelector('.key-equals').addEventListener('click', () => {
+        let x = val.replace(/([+*/-]|^)(-+)/g, (_, a, b) => a + (b.length % 2 ? '_' : ''));
+
+        let num;
+
+        for (const [, op, expr] of x.matchAll(/([+-]|^)([^+-]+)/g)) {
+          let num2;
+          for (let [, op2, n] of expr.matchAll(/([*/]|^)(_?(?:\d|\.)+)/g)) {
+            if (n[0] === '_') n = '-' + n.slice(1);
+            num2 = op2 === '*' ? num2 * n : op2 === '/' ? num2 / n : +n;
+          }
+          num = op === '+' ? num + num2 : op === '-' ? num - num2 : num2;
+        }
+
+        val = num + '';
+        updateScreen();
+        isRes = true;
+      });
+    </script>
+  </body>
+</html>
